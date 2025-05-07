@@ -23,4 +23,4 @@ FONTE = "Fonte4.ttf"
 VELOCIDADEOBS = 2
 
 #arquivos de obstáculos (carros)
-VETORCARROSIMG = ["carro_verde", "moto_preta", "carro_pink", "carro_branco", "carro_preto", "moto_azul"]
+VETOROBSTACULOSIMG = ["carro_verde", "moto_preta", "carro_pink", "carro_branco", "carro_preto", "moto_azul"]

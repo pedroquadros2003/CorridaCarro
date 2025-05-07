@@ -1,5 +1,6 @@
 from settings import *
 from background import BackGround
+from obstaculo import Obstaculo
 from HUD import HUD
 
 import pygame
@@ -18,7 +19,6 @@ class Controlador:
 
         self.clock = pygame.time.Clock()
 
-
         self.background = BackGround()
 
         self.HUD = HUD()
@@ -27,48 +27,62 @@ class Controlador:
         #self.grupo_jogador.add()
 
         self.grupo_obstaculos = pygame.sprite.Group()
+        self.tamanho_gp_obstaculos = 0
 
+        self.temp_obstaculos = 0
+        self.max_temp_obstaculos = 200
 
-        self.max_timer = 100
-        self.timer = 0
+        self.carros_ultrapassados = 0
 
     def run(self):
 
-        # se fechar a janela, o jogo para
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
+        while True:
+            # se fechar a janela, o jogo para
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
 
-        #adicionar obstáculos
-        self.adicionar_obstaculos()
+            #adicionar obstáculos
+            self.adicionar_obstaculos()
 
-        #dar update em tudo
-        self.update()
+            #dar update em tudo
+            self.update()
 
-        #dar blit nos elementos, em ordem
-        self.render()
+            #dar blit nos elementos, em ordem
+            self.render()
 
-        # Mensagem de derrota movimento lateral do carro
-        self.derrota_acostamento()
+            # Mensagem de derrota movimento lateral do carro
+            self.derrota_acostamento()
 
-        # Mensagem de derrota batida do carro
-        self.derrota_batida()
+            # Mensagem de derrota batida do carro
+            self.derrota_batida()
 
-        # Atualizando a tela
-        pygame.display.update()
-        self.clock.tick(100)
+            # Atualizando a tela
+            pygame.display.update()
+            self.clock.tick(100)
 
-        self.run()
+
 
 
     def adicionar_obstaculos(self):
-        pass
+        self.temp_obstaculos+=1
+
+        if self.temp_obstaculos>=self.max_temp_obstaculos:
+            self.temp_obstaculos=0
+
+            novo_obst = Obstaculo(VETOROBSTACULOSIMG[random.randrange(0, 6)], (random.randrange(125, 660), 0), self)
+            
+            self.grupo_obstaculos.add(novo_obst)
+
 
     def update(self):
-        pass
+        self.background.update()
+        self.grupo_obstaculos.update()
 
     def render(self):
-        pass
+        self.background.render(self.screen)
+        self.grupo_obstaculos.draw(self.screen)
+        self.HUD.render(self.screen, self.carros_ultrapassados)
     
     def derrota_acostamento(self):
         pass
