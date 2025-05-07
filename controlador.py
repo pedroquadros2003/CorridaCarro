@@ -18,6 +18,7 @@ class Controlador:
 
         self.clock = pygame.time.Clock()
 
+
         self.background = BackGround()
 
         self.HUD = HUD()
@@ -26,6 +27,7 @@ class Controlador:
         #self.grupo_jogador.add()
 
         self.grupo_obstaculos = pygame.sprite.Group()
+
 
         self.max_timer = 100
         self.timer = 0
@@ -57,6 +59,7 @@ class Controlador:
         self.clock.tick(100)
 
         self.run()
+
 
     def adicionar_obstaculos(self):
         pass
