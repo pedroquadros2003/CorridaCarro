@@ -1,6 +1,26 @@
-import pygame
+import pygame 
 
+"""
+    Configurações de jogo como velocidade dos carros, tamanho da tela e nome da janela.
+    
+"""
+
+#variavei de movimento do jogador
+DIREITA = pygame.K_RIGHT
+ESQUERDA = pygame.K_LEFT
+
+#tamanho da tela
 WIDTH = 800
 HEIGHT = 600
 
-font = pygame.font.Font("Fonte4.ttf", 100)
+#nome da janela de jogo
+TITULO = "Corrida de Carro" 
+
+#fonte utilizada no jogo
+FONTE = "Fonte4.ttf"
+
+#velocidade dos obstáculos
+VELOCIDADEOBS = 2
+
+#arquivos de obstáculos (carros)
+VETORCARROSIMG = ["carro_verde", "moto_preta", "carro_pink", "carro_branco", "carro_preto", "moto_azul"]
