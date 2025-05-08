@@ -62,22 +62,26 @@ class Controlador:
             self.clock.tick(100)
 
 
-
-
     def adicionar_obstaculos(self):
         self.temp_obstaculos+=1
 
         if self.temp_obstaculos>=self.max_temp_obstaculos:
             self.temp_obstaculos=0
 
-            novo_obst = Obstaculo(VETOROBSTACULOSIMG[random.randrange(0, 6)], (random.randrange(125, 660), 0), self)
+            novo_obst = Obstaculo(VETOROBSTACULOSIMG[random.randrange(0, 6)], (random.randrange(125, 660), 0))
             
             self.grupo_obstaculos.add(novo_obst)
 
 
     def update(self):
+        self.update_carros_ultrapassados()
         self.background.update()
         self.grupo_obstaculos.update()
+
+    def update_carros_ultrapassados(self):
+        for obstaculo in self.grupo_obstaculos:
+            if obstaculo.checar_momento_morte():
+                self.carros_ultrapassados+=1
 
     def render(self):
         self.background.render(self.screen)

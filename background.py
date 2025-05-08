@@ -5,30 +5,32 @@ import os
 class BackGround:
 
     def __init__(self):
-        self.grama = pygame.image.load(f"assets{os.sep}grama.jpg")
-        self.faixa_amarela = pygame.image.load(f"assets{os.sep}faixa_amarela.jpg")
-        self.faixa = pygame.image.load(f"assets{os.sep}faixa.jpg")
+        self.__grama = pygame.image.load(f"assets{os.sep}grama.jpg")
+        self.__faixa_amarela = pygame.image.load(f"assets{os.sep}faixa_amarela.jpg")
+        self.__faixa = pygame.image.load(f"assets{os.sep}faixa.jpg")
         
-        self.posicao_lista_faixas = [ [WIDTH/2, -800 + 100*i] for i in range(0, 14) ]
-        self.vel_faixas = 1
+        # Esta lista contém a posição, em formato de lista, de todas faixas amarelas 
+        self.__lista_posicao_das_faixas = [ [WIDTH/2, -800 + 100*i] for i in range(0, 14) ]
+
+        self.__vel_faixas = VELOCIDADE_FAIXAS
 
     def update(self):
         
-        for lista_posicao in self.posicao_lista_faixas:
-            lista_posicao[1] += self.vel_faixas
+        for posicao_faixa in self.__lista_posicao_das_faixas:
+            posicao_faixa[1] += self.__vel_faixas
 
-        if self.posicao_lista_faixas[0][1]>0:
-            for lista_posicao in self.posicao_lista_faixas:
-                lista_posicao[1] -= 800
+        if self.__lista_posicao_das_faixas[0][1]>0:
+            for posicao_faixa in self.__lista_posicao_das_faixas:
+                posicao_faixa[1] -= 800
 
 
     def render(self, screen):
         screen.fill((119, 119, 119))
-        screen.blit(self.grama, (0, 0))
-        screen.blit(self.grama, (700, 0))
-        screen.blit(self.faixa, (120, 0))  
-        screen.blit(self.faixa, (680, 0))  #
+        screen.blit(self.__grama, (0, 0))
+        screen.blit(self.__grama, (700, 0))
+        screen.blit(self.__faixa, (120, 0))  
+        screen.blit(self.__faixa, (680, 0))  #
 
-        for lista_posicao in self.posicao_lista_faixas:
-            screen.blit(self.faixa_amarela, tuple(lista_posicao))
+        for lista_posicao in self.__lista_posicao_das_faixas:
+            screen.blit(self.__faixa_amarela, tuple(lista_posicao))
 

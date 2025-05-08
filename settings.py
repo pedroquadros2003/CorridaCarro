@@ -20,7 +20,10 @@ TITULO = "Corrida de Carro"
 FONTE = "Fonte4.ttf"
 
 #velocidade dos obstáculos
-VELOCIDADEOBS = 2
+VELOCIDADE_OBS = 3
+
+#velocidade das faixas
+VELOCIDADE_FAIXAS=1
 
 #arquivos de obstáculos (carros)
 VETOROBSTACULOSIMG = ["carro_verde", "moto_preta", "carro_pink", "carro_branco", "carro_preto", "moto_azul"]
