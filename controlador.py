@@ -2,6 +2,7 @@ from settings import *
 from background import BackGround
 from obstaculo import Obstaculo
 from HUD import HUD
+from jogador import Jogador
 
 import pygame
 import random
@@ -23,8 +24,11 @@ class Controlador:
 
         self.HUD = HUD()
 
+        self.__game_over = False
+
         #self.grupo_jogador = pygame.sprite.GroupSingle()
         #self.grupo_jogador.add()
+        self.jogador = Jogador(300, 450)
 
         self.grupo_obstaculos = pygame.sprite.Group()
         self.tamanho_gp_obstaculos = 0
@@ -36,7 +40,7 @@ class Controlador:
 
     def run(self):
 
-        while True:
+        while not self.__game_over:
             # se fechar a janela, o jogo para
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -77,6 +81,7 @@ class Controlador:
         self.update_carros_ultrapassados()
         self.background.update()
         self.grupo_obstaculos.update()
+        self.jogador.update()
 
     def update_carros_ultrapassados(self):
         for obstaculo in self.grupo_obstaculos:
@@ -87,15 +92,32 @@ class Controlador:
         self.background.render(self.screen)
         self.grupo_obstaculos.draw(self.screen)
         self.HUD.render(self.screen, self.carros_ultrapassados)
+        self.jogador.render(self.screen)
     
     def derrota_acostamento(self):
-        pass
+        if self.jogador.x < 125 or self.jogador.x > 660:
+            self.HUD.derrota_acostamento(self.screen)
+            pygame.display.update()
+            time.sleep(2)
+            self.reiniciar_jogo()
+            self.run()
+            self.__game_over = True
 
     def derrota_batida(self):
         pass
+        # for obstaculo in self.grupo_obstaculos:
+        #     if dealgumaformachecaracolisaoooo:
+        #         self.HUD.derrota_acostamento(self.screen)
+        #         pygame.display.update()
+        #         time.sleep(2)
+        #         self.reiniciar_jogo()
+        #         self.run()
+        #         self.__game_over = True
 
-
-
-if __name__=="__main__":
-    c = Controlador()
-    c.run()
+    def reiniciar_jogo(self):
+        self.grupo_obstaculos.empty()
+        self.carros_ultrapassados = 0
+        self.temp_obstaculos = 0
+        self.max_temp_obstaculos = 200
+        self.jogador.x = 300
+        self.jogador.y = 450
