@@ -97,22 +97,17 @@ class Controlador:
     def derrota_acostamento(self):
         if self.jogador.x < 125 or self.jogador.x > 660:
             self.HUD.derrota_acostamento(self.screen)
-            pygame.display.update()
             time.sleep(2)
             self.reiniciar_jogo()
             self.run()
             self.__game_over = True
 
     def derrota_batida(self):
-        pass
-        # for obstaculo in self.grupo_obstaculos:
-        #     if dealgumaformachecaracolisaoooo:
-        #         self.HUD.derrota_acostamento(self.screen)
-        #         pygame.display.update()
-        #         time.sleep(2)
-        #         self.reiniciar_jogo()
-        #         self.run()
-        #         self.__game_over = True
+        for obstaculo in self.grupo_obstaculos:
+            if self.jogador.rect.colliderect(obstaculo.rect):
+                self.HUD.derrota_carro(self.screen)
+                time.sleep(2)
+                self.__game_over = True
 
     def reiniciar_jogo(self):
         self.grupo_obstaculos.empty()

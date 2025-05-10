@@ -9,7 +9,7 @@ class HUD:
         #fontes para as mensagens de derrota
         self.__perda_font = pygame.font.Font("assets\\Fonte4.ttf", 100)
         self.text_bateulateral = self.__perda_font.render("VOCê BATEU!", 0, (255, 255, 255))  # ("texto", opaco/transparente 0/1, cor do texto)
-        self.text_perdeu= self.__perda_font.render("GAME OVER!" , 0, (255, 0, 0))
+        self.text_perdeu = self.__perda_font.render("GAME OVER!" , 0, (255, 0, 0))
 
 
     def render(self, screen, carros_ultrapassados):
@@ -21,8 +21,12 @@ class HUD:
     def derrota_acostamento(self, screen):
         # Mensagem de derrota movimento lateral do carro
         screen.blit(self.text_bateulateral, (WIDTH//2-310, HEIGHT//2-100))
+        pygame.display.update()
     
-
+    def derrota_carro(self, screen):
+        # Mensagem de derrota movimento do carro
+        screen.blit(self.text_perdeu, (WIDTH//2-310, HEIGHT//2-100))
+        pygame.display.update()
     
 
 

@@ -8,12 +8,15 @@ class Jogador():
         self.x = x0
         self.y = y0
         self.car_image = pygame.image.load("assets\carro_rosa.png")
+        self.rect = self.car_image.get_rect(midtop=(self.x, self.y))
 
     def update(self):
         if pygame.key.get_pressed()[DIREITA]:
             self.x = self.x + 3
+            self.rect.x = self.x
         if pygame.key.get_pressed()[ESQUERDA]:
             self.x = self.x - 3
+            self.rect.x = self.x
 
     def render(self, screen):
         #self.car_image = pygame.transform.scale(self.car_image, (50, 100))
