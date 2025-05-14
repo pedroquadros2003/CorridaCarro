@@ -25,6 +25,3 @@ class Obstaculo (pygame.sprite.Sprite):
                 self.__esta_morto = True
                 return True
         return False
-        
-
-#git remote add origin git@github.com:<pedroquadros2003>/CorridaCarro.git

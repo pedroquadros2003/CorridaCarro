@@ -9,6 +9,7 @@ import random
 import time
 from settings import *
 
+
 class Controlador:
 
     def __init__(self):
@@ -26,17 +27,33 @@ class Controlador:
 
         self.__game_over = False
 
-        #self.grupo_jogador = pygame.sprite.GroupSingle()
-        #self.grupo_jogador.add()
         self.jogador = Jogador(300, 450)
 
         self.grupo_obstaculos = pygame.sprite.Group()
         self.tamanho_gp_obstaculos = 0
 
-        self.temp_obstaculos = 0
-        self.max_temp_obstaculos = 200
+        self.__temp_obstaculos = 0
+        self.__max_temp_obstaculos = 200
 
-        self.carros_ultrapassados = 0
+        self.__carros_ultrapassados = 0
+
+    def __get_temp_obstaculos(self):
+        return self.__temp_obstaculos
+
+    def __set_temp_obstaculos(self, value):
+        self.__temp_obstaculos = value
+
+    def __get_max_temp_obstaculos(self):
+        return self.__max_temp_obstaculos
+
+    def __set_max_temp_obstaculos(self, value):
+        self.__max_temp_obstaculos = value
+
+    def __get_carros_ultrapassados(self):
+        return self.__carros_ultrapassados
+
+    def __set_carros_ultrapassados(self, value):
+        self.__carros_ultrapassados = value
 
     def run(self):
 
@@ -46,13 +63,13 @@ class Controlador:
                 if event.type == pygame.QUIT:
                     pygame.quit()
 
-            #adicionar obstáculos
+            # adicionar obstáculos
             self.adicionar_obstaculos()
 
-            #dar update em tudo
+            # dar update em tudo
             self.update()
 
-            #dar blit nos elementos, em ordem
+            # dar blit nos elementos, em ordem
             self.render()
 
             # Mensagem de derrota movimento lateral do carro
@@ -65,17 +82,15 @@ class Controlador:
             pygame.display.update()
             self.clock.tick(100)
 
-
     def adicionar_obstaculos(self):
-        self.temp_obstaculos+=1
+        self.__set_temp_obstaculos(self.__get_temp_obstaculos() + 1)
 
-        if self.temp_obstaculos>=self.max_temp_obstaculos:
-            self.temp_obstaculos=0
+        if self.__get_temp_obstaculos() >= self.__get_max_temp_obstaculos():
+            self.__set_temp_obstaculos(0)
 
             novo_obst = Obstaculo(VETOROBSTACULOSIMG[random.randrange(0, 6)], (random.randrange(125, 660), 0))
-            
-            self.grupo_obstaculos.add(novo_obst)
 
+            self.grupo_obstaculos.add(novo_obst)
 
     def update(self):
         self.update_carros_ultrapassados()
@@ -86,16 +101,16 @@ class Controlador:
     def update_carros_ultrapassados(self):
         for obstaculo in self.grupo_obstaculos:
             if obstaculo.checar_momento_morte():
-                self.carros_ultrapassados+=1
+                self.__set_carros_ultrapassados(self.__get_carros_ultrapassados() + 1)
 
     def render(self):
         self.background.render(self.screen)
         self.grupo_obstaculos.draw(self.screen)
-        self.HUD.render(self.screen, self.carros_ultrapassados)
+        self.HUD.render(self.screen, self.__get_carros_ultrapassados())
         self.jogador.render(self.screen)
-    
+
     def derrota_acostamento(self):
-        if self.jogador.x < 125 or self.jogador.x > 660:
+        if self.jogador.get_x() < 125 or self.jogador.get_x() > 660:
             self.HUD.derrota_acostamento(self.screen)
             time.sleep(2)
             self.reiniciar_jogo()
@@ -111,8 +126,8 @@ class Controlador:
 
     def reiniciar_jogo(self):
         self.grupo_obstaculos.empty()
-        self.carros_ultrapassados = 0
-        self.temp_obstaculos = 0
-        self.max_temp_obstaculos = 200
-        self.jogador.x = 300
-        self.jogador.y = 450
+        self.__set_carros_ultrapassados(0)
+        self.__set_temp_obstaculos(0)
+        self.__set_max_temp_obstaculos(200)
+        self.jogador.set_x(300)
+        self.jogador.set_y(450)
